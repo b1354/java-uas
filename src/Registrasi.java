@@ -191,8 +191,8 @@ public class Registrasi implements ActionListener, MouseListener {
                 ResultSet Data = stmt.executeQuery(query);
 
                 if (Data.next()) {
-                    textNama.setText(Data.getString(2));
-                    textJurusan.setText(Data.getString(3));
+                    textNama.setText(Data.getString("nama"));
+                    textJurusan.setText(Data.getString("jurusan"));
                 } else {
                     JOptionPane.showMessageDialog(null, "Data tidak ditemukan");
                     clearForm();
@@ -236,9 +236,12 @@ public class Registrasi implements ActionListener, MouseListener {
             }
 
         } catch (Exception er) {
-            JOptionPane.showMessageDialog(frame, "Terjadi error saat melakukan operasi", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            System.out.println(er.getMessage());
+            if (er.getMessage().contains("Duplicate entry")) {
+                JOptionPane.showMessageDialog(null, "NIM sudah ada", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Terjadi error saat melakukan operasi", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
